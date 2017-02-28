@@ -44,6 +44,7 @@
 			<plugin>
 			    <groupId>org.codehaus.mojo</groupId>
 			    <artifactId>jaxb2-maven-plugin</artifactId>
+				<version>2.3</version>
 			    <executions>
 
                     <execution>
@@ -57,6 +58,9 @@
                             <bindingDirectory>src/main/xjb</bindingDirectory>
                             <bindingFiles>binding-customization.xjb</bindingFiles>
                             <clearOutputDir>false</clearOutputDir>
+							<sources>
+								<source>src/main/schemas</source>
+							</sources>
                         </configuration>
                     </execution>
 			    </executions>
@@ -68,6 +72,32 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- Needed to run the plugin xjc with java8 -->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<id>set-additional-system-properties</id>
+						<goals>
+							<goal>set-system-properties</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<properties>
+						<property>
+							<name>javax.xml.accessExternalSchema</name>
+							<value>all</value>
+						</property>
+						<property>
+							<name>javax.xml.accessExternalDTD</name>
+							<value>all</value>
+						</property>
+					</properties>
 				</configuration>
 			</plugin>
 		</plugins>
